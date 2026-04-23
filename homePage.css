@@ -1,13 +1,21 @@
 /* יסודות */
-body {
+html, body {
     margin: 0;
+    padding: 0;
     font-family: 'Noto Sans Hebrew', sans-serif;
     background: #f6f8f3;
     scroll-behavior: smooth;
-    overflow-x: hidden;
+    max-width: 100%;
+    overflow-x: hidden; /* מונע גלילה לצדדים */
+    position: relative;
 }
 
-/* NAVBAR - השארתי בדיוק את המואר והמגניב */
+/* קלאס עזר לנעילת גלילה כשהעגלה פתוחה */
+body.modal-open {
+    overflow: hidden;
+}
+
+/* NAVBAR */
 .navbar {
     display: flex;
     align-items: center;
@@ -31,17 +39,18 @@ body {
     font-weight: 600; border-radius: 12px; transition: all 0.3s ease;
 }
 
-/* האפקט שאהבת */
 .nav-links a:hover {
     background: rgba(255, 255, 255, 0.2);
     transform: translateY(-2px);
 }
 
-/* HERO - בדיוק כמו שהיה */
+/* HERO */
 .hero-section {
     background-image: linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35)), url('P.png');
-    background-size: cover; background-position: center;
-    height: calc(100vh - 75px); width: 100%;
+    background-size: cover; 
+    background-position: center;
+    height: calc(100vh - 75px); 
+    width: 100%;
     display: flex; align-items: center; justify-content: center; text-align: center;
 }
 
@@ -53,7 +62,7 @@ body {
 }
 .hero-btn:hover { transform: scale(1.05); box-shadow: 0 8px 20px rgba(0,0,0,0.2); }
 
-/* עיצוב הקולקציות החדשות */
+/* עיצוב הקולקציות */
 .collection-container { padding: 60px 5% 20px 5%; }
 .collection-title {
     font-size: 2.2rem; color: #1B5E20; margin-bottom: 30px;
@@ -67,7 +76,7 @@ body {
     scroll-behavior: smooth; padding: 20px 5px; width: 100%;
 }
 
-/* כרטיס מוצר - מודרני ונקי */
+/* כרטיס מוצר */
 .product-card {
     min-width: 280px; background: white; border-radius: 25px;
     padding: 20px; box-shadow: 0 8px 25px rgba(0,0,0,0.05);
@@ -102,6 +111,7 @@ body {
 .slider-arrow:hover { background: #2E7D32; color: white; }
 .slider-arrow.prev { right: -25px; }
 .slider-arrow.next { left: -25px; }
+
 /* --- עיצוב העגלה הצפה --- */
 .floating-cart {
     position: fixed;
@@ -109,20 +119,23 @@ body {
     right: 30px;
     width: 65px;
     height: 65px;
-    background: #2E7D32; /* הירוק של האתר */
+    background: #2E7D32;
     border-radius: 50%;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: center; /* מרכוז מושלם לאייקון */
     box-shadow: 0 8px 25px rgba(0,0,0,0.3);
     cursor: pointer;
     z-index: 2000;
     transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.floating-cart:hover { transform: scale(1.1); background: #1B5E20; }
+.floating-cart i {
+    color: white;
+    font-size: 1.8rem;
+}
 
-.floating-cart svg { width: 30px; height: 30px; stroke: white; }
+.floating-cart:hover { transform: scale(1.1); background: #1B5E20; }
 
 #cart-count {
     position: absolute;
@@ -141,19 +154,21 @@ body {
     border: 2px solid white;
 }
 
-/* --- חלון העגלה --- */
+/* --- חלון העגלה המעודכן --- */
 .cart-modal {
     position: fixed;
     top: 0;
-    right: -400px; /* מוסתר בהתחלה */
-    width: 350px;
+    right: -450px; /* מוסתר בהתחלה */
+    width: 400px;  /* רוחב מוגדל */
     height: 100vh;
+    height: 100dvh; /* גובה דינמי למובייל */
     background: white;
     box-shadow: -5px 0 25px rgba(0,0,0,0.1);
     z-index: 2100;
     transition: 0.4s ease;
     display: flex;
     flex-direction: column;
+    overscroll-behavior: contain;
 }
 
 .cart-modal.open { right: 0; }
@@ -165,7 +180,25 @@ body {
     display: none; z-index: 2050;
 }
 
-.cart-header { padding: 20px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
+.cart-header { 
+    padding: 20px; 
+    border-bottom: 1px solid #eee; 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+}
+
+/* ה-X החדש שלך */
+.close-cart {
+    background: none;
+    border: none;
+    font-size: 2.5rem;
+    color: black;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0 10px;
+}
+
 .cart-items-list { flex: 1; overflow-y: auto; padding: 20px; }
 .cart-item { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; border-bottom: 1px solid #f9f9f9; padding-bottom: 10px; }
 .cart-item img { width: 60px; height: 60px; border-radius: 10px; object-fit: cover; }
@@ -176,7 +209,8 @@ body {
 .cart-footer { padding: 20px; background: #f9f9f9; border-top: 1px solid #eee; }
 .total-price { font-size: 1.4rem; font-weight: 800; margin-bottom: 15px; }
 .checkout-btn { width: 100%; background: #2E7D32; color: white; border: none; padding: 15px; border-radius: 12px; font-weight: 700; cursor: pointer; }
-/* התאמה למובייל */
+
+/* פוטר ואודות */
 .aboutUs-section{
     margin-top: 5vh;
     display: flex;
@@ -190,104 +224,66 @@ body {
     border-radius: 16px;
     box-shadow: -5px 0 25px rgba(0, 0, 0, 0.18);
 }
-.footer{
-    background:linear-gradient(90deg, #43A047, #2E7D32);
+
+.footer {
+    padding-top: 20px;
+    background: linear-gradient(90deg, #43A047, #2E7D32);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap:1em;
-
+    gap: 0.5em;
 }
-.footer-menu{
+
+.footer-menu {
     display: flex;
     justify-content: center;
     align-items: center;
     gap:2em;
     text-align: center;
 }
-.footer-menu a {
-    color:whitesmoke;
-    text-decoration: none;
-}
-.footer-menu a:hover{
-    transform: scale(1.04);
-}
-/* ניקוי ושילוב אזור הקשר בתוך הפוטר */
+.footer-menu a { color:whitesmoke; text-decoration: none; }
+.footer-menu a:hover { transform: scale(1.04); }
+
 .contact-footer-wrapper {
     text-align: center;
-    padding: 1פס;
+    padding: 15px;
     width: 100%;
 }
-
-.contact-footer-title {
-    font-size: 1.5rem;
-    color: white; /* טקסט לבן שמשתלב בפוטר */
-    margin-bottom: 25px;
-    font-weight: 700;
-}
-
-.contact-methods {
-    display: flex;
-    justify-content: center;
-    gap: 40px;
-    flex-wrap: wrap;
-}
-
-.contact-method {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-decoration: none;
-    transition: all 0.3s ease;
-}
-
-/* העיגולים נשארים עם הגרדיאנט כי זה נראה מעולה על ירוק */
+.contact-footer-title { font-size: 1.5rem; color: white; margin-bottom: 25px; font-weight: 700; }
+.contact-methods { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; }
+.contact-method { display: flex; flex-direction: column; align-items: center; text-decoration: none; }
 .icon-circle {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.6rem;
-    color: white;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-    margin-bottom: 10px;
-    transition: 0.3s ease;
+    width: 60px; height: 60px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.6rem; color: white; box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    margin-bottom: 10px; transition: 0.3s ease;
 }
+.method-text { color: white; font-size: 0.9rem; font-weight: 500; opacity: 0.9; }
 
-.method-text {
-    color: white;
-    font-size: 0.9rem;
-    font-weight: 500;
-    opacity: 0.9;
-}
-
-.contact-method:hover .icon-circle {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-}
-
-.contact-method:hover .method-text {
-    opacity: 1;
-}
-
-/* צבעי הלוגואים (השארתי את הגרדיאנטים שהיו) */
 .contact-method.call .icon-circle { background: linear-gradient(135deg, #4facfe, #00f2fe); }
 .contact-method.whatsapp .icon-circle { background: linear-gradient(135deg, #25D366, #128C7E); }
 .contact-method.email .icon-circle { background: linear-gradient(135deg, #ff9a9e, #fad0c4); }
 
-/* תיקון קטן לפוטר הכללי שלך */
-.footer {
-    padding-top: 20px;
-    background: linear-gradient(90deg, #43A047, #2E7D32);
-    /* הורדתי את ה-gap כדי לשלוט ברווחים ידנית */
-    gap: 0.5em; 
-}
+/* --- התאמות מובייל סופיות --- */
 @media (max-width: 768px) {
     .hero-title { font-size: 2.8rem; }
     .product-card { min-width: 220px; }
-    .slider-arrow { display: none; } /* במובייל פשוט גוללים עם האצבע */
+    .slider-arrow { display: none; }
     .products-grid { overflow-x: auto; }
+    
+    .cart-modal {
+        width: 85%; /* רוחב נוח למובייל */
+        right: -100%;
+        bottom: 0;
+        top: 0;
+    }
+    
+    .cart-modal.open {
+        right: 0;
+    }
+    
+    .cart-footer {
+        padding-bottom: env(safe-area-inset-bottom);
+    }
 }

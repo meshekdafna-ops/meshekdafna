@@ -102,12 +102,27 @@ function changeQty(id, delta) {
 }
 
 // פתיחה/סגירה של העגלה
+// פתיחה/סגירה של העגלה עם חסימת גלילה הרמטית
 function toggleCart() {
     const modal = document.getElementById('cart-modal');
     const overlay = document.getElementById('cart-overlay');
+    const body = document.body;
     
     modal.classList.toggle('open');
-    overlay.style.display = (overlay.style.display === 'block') ? 'none' : 'block';
+    
+    if (modal.classList.contains('open')) {
+        overlay.style.display = 'block';
+        // חסימת גלילה - פתרון משולב
+        body.style.overflow = 'hidden'; 
+        body.style.height = '100vh';
+        body.classList.add('modal-open');
+    } else {
+        overlay.style.display = 'none';
+        // שחרור גלילה
+        body.style.overflow = ''; 
+        body.style.height = '';
+        body.classList.remove('modal-open');
+    }
 }
 
 // גלילה בחיצים
