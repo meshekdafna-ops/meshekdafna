@@ -1,0 +1,293 @@
+/* יסודות */
+body {
+    margin: 0;
+    font-family: 'Noto Sans Hebrew', sans-serif;
+    background: #f6f8f3;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+}
+
+/* NAVBAR - השארתי בדיוק את המואר והמגניב */
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1.5em;
+    background: linear-gradient(90deg, #43A047, #2E7D32);
+    height: 75px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo-text { display: flex; flex-direction: column; line-height: 1; }
+.logo-small { font-size: 0.85rem; color: #E8F5E9; font-weight: 500; }
+.logo-main { font-size: 1.7rem; font-weight: 900; color: white; letter-spacing: -1px; }
+
+.nav-links { display: flex; gap: 0.5em; }
+.nav-links a {
+    text-decoration: none; color: white; padding: 0.6em 1.2em;
+    font-weight: 600; border-radius: 12px; transition: all 0.3s ease;
+}
+
+/* האפקט שאהבת */
+.nav-links a:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+/* HERO - בדיוק כמו שהיה */
+.hero-section {
+    background-image: linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35)), url('P.png');
+    background-size: cover; background-position: center;
+    height: calc(100vh - 75px); width: 100%;
+    display: flex; align-items: center; justify-content: center; text-align: center;
+}
+
+.hero-title { color: white; font-size: 4rem; margin: 0; font-weight: 900; text-shadow: 0 4px 15px rgba(0,0,0,0.4); }
+.hero-subtitle { color: #C8E6C9; font-size: 1.8rem; margin: 10px 0 35px 0; }
+.hero-btn {
+    display: inline-block; padding: 15px 45px; background: white; color: #2E7D32;
+    text-decoration: none; font-weight: 800; border-radius: 50px; transition: 0.3s;
+}
+.hero-btn:hover { transform: scale(1.05); box-shadow: 0 8px 20px rgba(0,0,0,0.2); }
+
+/* עיצוב הקולקציות החדשות */
+.collection-container { padding: 60px 5% 20px 5%; }
+.collection-title {
+    font-size: 2.2rem; color: #1B5E20; margin-bottom: 30px;
+    border-right: 6px solid #43A047; padding-right: 15px;
+}
+
+.slider-wrapper { position: relative; display: flex; align-items: center; }
+
+.products-grid {
+    display: flex; gap: 25px; overflow-x: hidden;
+    scroll-behavior: smooth; padding: 20px 5px; width: 100%;
+}
+
+/* כרטיס מוצר - מודרני ונקי */
+.product-card {
+    min-width: 280px; background: white; border-radius: 25px;
+    padding: 20px; box-shadow: 0 8px 25px rgba(0,0,0,0.05);
+    text-align: center; transition: 0.3s ease; border: 1px solid #f0f0f0;
+}
+
+.product-card:hover { transform: translateY(-10px); box-shadow: 0 15px 35px rgba(0,0,0,0.1); }
+
+.product-card img {
+    width: 100%; height: 200px; object-fit: cover;
+    border-radius: 20px; margin-bottom: 15px;
+}
+
+.product-card h3 { font-size: 1.4rem; color: #333; margin: 10px 0; }
+.product-card .price { font-size: 1.3rem; font-weight: 800; color: #2E7D32; margin-bottom: 15px; }
+
+.add-btn {
+    width: 100%; background: #2E7D32; color: white; border: none;
+    padding: 14px; border-radius: 15px; cursor: pointer;
+    font-weight: 700; font-size: 1rem; transition: 0.3s;
+}
+.add-btn:hover { background: #1B5E20; }
+
+/* חיצי סליידר */
+.slider-arrow {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    background: white; border: none; width: 50px; height: 50px;
+    border-radius: 50%; box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    cursor: pointer; z-index: 10; font-size: 1.5rem; color: #2E7D32;
+    display: flex; align-items: center; justify-content: center; transition: 0.3s;
+}
+.slider-arrow:hover { background: #2E7D32; color: white; }
+.slider-arrow.prev { right: -25px; }
+.slider-arrow.next { left: -25px; }
+/* --- עיצוב העגלה הצפה --- */
+.floating-cart {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 65px;
+    height: 65px;
+    background: #2E7D32; /* הירוק של האתר */
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+    cursor: pointer;
+    z-index: 2000;
+    transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.floating-cart:hover { transform: scale(1.1); background: #1B5E20; }
+
+.floating-cart svg { width: 30px; height: 30px; stroke: white; }
+
+#cart-count {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: #FF5252;
+    color: white;
+    font-size: 0.8rem;
+    font-weight: 900;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid white;
+}
+
+/* --- חלון העגלה --- */
+.cart-modal {
+    position: fixed;
+    top: 0;
+    right: -400px; /* מוסתר בהתחלה */
+    width: 350px;
+    height: 100vh;
+    background: white;
+    box-shadow: -5px 0 25px rgba(0,0,0,0.1);
+    z-index: 2100;
+    transition: 0.4s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.cart-modal.open { right: 0; }
+
+#cart-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: none; z-index: 2050;
+}
+
+.cart-header { padding: 20px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
+.cart-items-list { flex: 1; overflow-y: auto; padding: 20px; }
+.cart-item { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; border-bottom: 1px solid #f9f9f9; padding-bottom: 10px; }
+.cart-item img { width: 60px; height: 60px; border-radius: 10px; object-fit: cover; }
+.item-info { flex: 1; }
+.qty-controls { display: flex; align-items: center; gap: 10px; margin-top: 5px; }
+.qty-btn { background: #eee; border: none; width: 25px; height: 25px; cursor: pointer; border-radius: 5px; }
+
+.cart-footer { padding: 20px; background: #f9f9f9; border-top: 1px solid #eee; }
+.total-price { font-size: 1.4rem; font-weight: 800; margin-bottom: 15px; }
+.checkout-btn { width: 100%; background: #2E7D32; color: white; border: none; padding: 15px; border-radius: 12px; font-weight: 700; cursor: pointer; }
+/* התאמה למובייל */
+.aboutUs-section{
+    margin-top: 5vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap:1em;
+    flex-direction: column;
+    text-align: center;
+}
+.aboutUs-section img {
+    border-radius: 16px;
+    box-shadow: -5px 0 25px rgba(0, 0, 0, 0.18);
+}
+.footer{
+    background:linear-gradient(90deg, #43A047, #2E7D32);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap:1em;
+
+}
+.footer-menu{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap:2em;
+    text-align: center;
+}
+.footer-menu a {
+    color:whitesmoke;
+    text-decoration: none;
+}
+.footer-menu a:hover{
+    transform: scale(1.04);
+}
+/* ניקוי ושילוב אזור הקשר בתוך הפוטר */
+.contact-footer-wrapper {
+    text-align: center;
+    padding: 1פס;
+    width: 100%;
+}
+
+.contact-footer-title {
+    font-size: 1.5rem;
+    color: white; /* טקסט לבן שמשתלב בפוטר */
+    margin-bottom: 25px;
+    font-weight: 700;
+}
+
+.contact-methods {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+}
+
+.contact-method {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+/* העיגולים נשארים עם הגרדיאנט כי זה נראה מעולה על ירוק */
+.icon-circle {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    color: white;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    margin-bottom: 10px;
+    transition: 0.3s ease;
+}
+
+.method-text {
+    color: white;
+    font-size: 0.9rem;
+    font-weight: 500;
+    opacity: 0.9;
+}
+
+.contact-method:hover .icon-circle {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+}
+
+.contact-method:hover .method-text {
+    opacity: 1;
+}
+
+/* צבעי הלוגואים (השארתי את הגרדיאנטים שהיו) */
+.contact-method.call .icon-circle { background: linear-gradient(135deg, #4facfe, #00f2fe); }
+.contact-method.whatsapp .icon-circle { background: linear-gradient(135deg, #25D366, #128C7E); }
+.contact-method.email .icon-circle { background: linear-gradient(135deg, #ff9a9e, #fad0c4); }
+
+/* תיקון קטן לפוטר הכללי שלך */
+.footer {
+    padding-top: 20px;
+    background: linear-gradient(90deg, #43A047, #2E7D32);
+    /* הורדתי את ה-gap כדי לשלוט ברווחים ידנית */
+    gap: 0.5em; 
+}
+@media (max-width: 768px) {
+    .hero-title { font-size: 2.8rem; }
+    .product-card { min-width: 220px; }
+    .slider-arrow { display: none; } /* במובייל פשוט גוללים עם האצבע */
+    .products-grid { overflow-x: auto; }
+}

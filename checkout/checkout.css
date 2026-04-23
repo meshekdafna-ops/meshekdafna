@@ -1,0 +1,124 @@
+body {
+    margin: 0;
+    font-family: 'Noto Sans Hebrew', sans-serif;
+    background: #f6f8f3;
+    direction: rtl;
+}
+
+/* Navbar */
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 5%;
+    background: linear-gradient(90deg, #43A047, #2E7D32);
+    height: 70px;
+    color: white;
+}
+
+.logo-text { display: flex; flex-direction: column; line-height: 1; }
+.logo-small { font-size: 0.8rem; }
+.logo-main { font-size: 1.5rem; font-weight: 900; }
+
+.back-link {
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+/* Container */
+.checkout-container {
+    max-width: 1100px;
+    margin: 40px auto;
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 30px;
+    padding: 0 20px;
+}
+
+/* Form Styles */
+.checkout-form, .order-summary {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+
+h2, h3 { color: #1B5E20; margin-top: 0; }
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #444;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-sizing: border-box;
+    font-family: inherit;
+    outline: none;
+    transition: 0.3s;
+}
+
+.form-group input:focus {
+    border-color: #43A047;
+    box-shadow: 0 0 0 3px rgba(67, 160, 71, 0.1);
+}
+
+.submit-order-btn {
+    width: 100%;
+    background: #2E7D32;
+    color: white;
+    border: none;
+    padding: 18px;
+    border-radius: 12px;
+    font-size: 1.6rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-top: 10px;
+    font-family: 'Noto Sans Hebrew', sans-serif;
+}
+
+.submit-order-btn:hover { background: #1B5E20; transform: translateY(-2px); }
+
+/* Summary Styles */
+.summary-items {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.summary-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid #f5f5f5;
+}
+
+.summary-item-info { display: flex; align-items: center; gap: 10px; }
+.summary-item-info img { width: 50px; height: 50px; border-radius: 8px; object-fit: cover; }
+
+.summary-total {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.3rem;
+    font-weight: 900;
+    color: #2E7D32;
+    margin-top: 20px;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .checkout-container { grid-template-columns: 1fr; }
+    .order-summary { order: -1; } /* סיכום למעלה במובייל */
+}

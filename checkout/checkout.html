@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>משק דפנה - צ'ק אאוט</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Hebrew:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="checkout.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo" onclick="window.location.href='../homePage.html'" style="cursor:pointer">
+            <div class="logo-text">
+                <span class="logo-small">משק</span>
+                <span class="logo-main">דפנה</span>
+            </div>
+        </div>
+        <a href="../homePage.html" class="back-link"><i class="fas fa-arrow-right"></i> חזרה לחנות</a>
+    </nav>
+
+    <main class="checkout-container">
+        <section class="checkout-form">
+            <h2>פרטי משלוח</h2>
+            <form id="order-form">
+                <div class="form-group">
+                    <label>שם פרטי</label>
+                    <input type="text" id="first-name" required placeholder="ישראל">
+                </div>
+                <div class="form-group">
+                    <label>שם משפחה</label>
+                    <input type="text" id="last-name" required placeholder="ישראלי">
+                </div>
+                <div class="form-group">
+                    <label>טלפון</label>
+                    <input type="tel" id="phone" required placeholder="050-0000000">
+                </div>
+                <div class="form-group">
+                    <label>עיר / יישוב</label>
+                    <input type="text" id="city" required placeholder="תל אביב">
+                </div>
+                <div class="form-group">
+                    <label>כתובת מלאה (רחוב ומספר בית)</label>
+                    <input type="text" id="address" required placeholder="הרצל 1">
+                </div>
+                
+                <button type="submit" class="submit-order-btn">אישור וסיום הזמנה</button>
+            </form>
+        </section>
+
+        <aside class="order-summary">
+            <h3>סיכום ההזמנה</h3>
+            <div id="summary-items" class="summary-items">
+                </div>
+            <hr>
+            <div class="summary-total">
+                <span>סה"כ לתשלום:</span>
+                <span id="final-price">₪0.00</span>
+            </div>
+        </aside>
+    </main>
+
+    <script src="checkout.js"></script>
+</body>
+</html>
