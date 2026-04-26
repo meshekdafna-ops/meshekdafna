@@ -1,5 +1,5 @@
 // 1. מאגר הנתונים
-const allProducts = [];
+let allProducts = [];
 
 // 2. ניהול העגלה (טעינה ראשונית מהזיכרון)
 let cart = JSON.parse(localStorage.getItem('meshek_dafna_cart')) || [];
