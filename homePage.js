@@ -10,12 +10,23 @@ function saveCart() {
 }
 
 async function fetchProducts() {
+    const preloader = document.getElementById('preloader');
     try {
         const response = await fetch('https://backend-meshekdafna.onrender.com/api/products');
         allProducts = await response.json();
-        renderProducts(); // מרנדר רק אחרי שהנתונים הגיעו
+        
+        renderProducts(); // מרנדר את המוצרים
+        
+        // מעלים את הלואדר רק אחרי שהנתונים הגיעו
+        if (preloader) {
+            preloader.classList.add('loader-hidden');
+        }
     } catch (error) {
         console.error("Failed to fetch products:", error);
+        // במקרה של שגיאה, אולי כדאי להראות הודעה למשתמש או לשחרר את הלואדר בכל זאת
+        if (preloader) {
+            preloader.innerHTML = "<p style='color:white;'>אופס, השרת מתעורר לאט... נסה לרענן</p>";
+        }
     }
 }
 
