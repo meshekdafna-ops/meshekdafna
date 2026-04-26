@@ -10,23 +10,43 @@ function saveCart() {
 }
 
 async function fetchProducts() {
+    const progressFill = document.getElementById('progress-fill');
+    const percentText = document.getElementById('percent');
     const preloader = document.getElementById('preloader');
+    
+    let currentPercent = 0;
+
+    // פונקציית עזר להרצת האחוזים באופן ויזואלי
+    const loadingInterval = setInterval(() => {
+        if (currentPercent < 90) { // רץ עד 90% ומחכה לתשובה מהשרת
+            currentPercent += Math.floor(Math.random() * 5) + 1; // קפיצות אקראיות למראה "אמיתי"
+            if (currentPercent > 90) currentPercent = 90;
+            updateLoader(currentPercent);
+        }
+    }, 200);
+
+    function updateLoader(percent) {
+        progressFill.style.width = percent + '%';
+        percentText.innerText = percent + '%';
+    }
+
     try {
         const response = await fetch('https://backend-meshekdafna.onrender.com/api/products');
         allProducts = await response.json();
         
-        renderProducts(); // מרנדר את המוצרים
+        // כשהנתונים הגיעו - קופצים ל-100% ומעלימים
+        clearInterval(loadingInterval);
+        updateLoader(100);
         
-        // מעלים את הלואדר רק אחרי שהנתונים הגיעו
-        if (preloader) {
+        setTimeout(() => {
+            renderProducts();
             preloader.classList.add('loader-hidden');
-        }
+        }, 500); // השהייה קטנה כדי שיראו את ה-100%
+
     } catch (error) {
-        console.error("Failed to fetch products:", error);
-        // במקרה של שגיאה, אולי כדאי להראות הודעה למשתמש או לשחרר את הלואדר בכל זאת
-        if (preloader) {
-            preloader.innerHTML = "<p style='color:white;'>אופס, השרת מתעורר לאט... נסה לרענן</p>";
-        }
+        clearInterval(loadingInterval);
+        console.error("Failed to fetch:", error);
+        document.getElementById('status-text').innerText = "תקלה בחיבור לשרת...";
     }
 }
 
