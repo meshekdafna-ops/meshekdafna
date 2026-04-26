@@ -99,7 +99,29 @@ body.modal-open {
     font-weight: 700; font-size: 1rem; transition: 0.3s;
 }
 .add-btn:hover { background: #1B5E20; }
+.product-details {
+    display: flex;
+    justify-content: space-between; /* דוחף אחד לימין אחד לשמאל */
+    align-items: center;
+    padding: 0 10px;
+    margin-bottom: 10px;
+}
 
+.price {
+    font-weight: bold;
+    color: #2e7d32; /* ירוק למחיר */
+}
+
+.stock {
+    font-size: 0.9em;
+    color: #666; /* אפור למלאי */
+}
+
+/* סגנון לכפתור מנוטרל כשאין מלאי */
+.add-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
 /* חיצי סליידר */
 .slider-arrow {
     position: absolute; top: 50%; transform: translateY(-50%);

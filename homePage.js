@@ -1,20 +1,5 @@
 // 1. מאגר הנתונים
-const allProducts = [
-    // פירות
-    { id: 1, name: "אפרסק עסיסי", price: 12.90, category: "fruits", img: "https://images.unsplash.com/photo-1523520495916-bc16d89552fc?q=80&w=300" },
-    { id: 2, name: "ענבים ירוקים", price: 18.00, category: "fruits", img: "https://images.unsplash.com/photo-1537084642907-629340c7e59c?q=80&w=300" },
-    { id: 3, name: "מנגו מאיה", price: 15.50, category: "fruits", img: "https://images.unsplash.com/photo-1553279768-865429fa0078?q=80&w=300" },
-    { id: 4, name: "בננה צהובה", price: 6.90, category: "fruits", img: "https://images.unsplash.com/photo-1528825876-01085c292f75?q=80&w=300" },
-    
-    // ירקות
-    { id: 101, name: "עגבנייה מגי", price: 9.90, category: "veggies", img: "https://images.unsplash.com/photo-1546473472-3d7ad6665793?q=80&w=300" },
-    { id: 102, name: "מלפפון פריך", price: 7.50, category: "veggies", img: "https://images.unsplash.com/photo-1449333254714-23e0024971c7?q=80&w=300" },
-    { id: 103, name: "פלפל אדום", price: 11.00, category: "veggies", img: "https://images.unsplash.com/photo-1563513307168-a405904f666b?q=80&w=300" },
-    
-    // מארזים
-    { id: 201, name: "מארז סלט ישראלי", price: 45.00, category: "packs", img: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=300" },
-    { id: 202, name: "מארז פירות העונה", price: 89.00, category: "packs", img: "https://images.unsplash.com/photo-1610832958506-ee5633817d70?q=80&w=300" }
-];
+const allProducts = [];
 
 // 2. ניהול העגלה (טעינה ראשונית מהזיכרון)
 let cart = JSON.parse(localStorage.getItem('meshek_dafna_cart')) || [];
@@ -24,7 +9,16 @@ function saveCart() {
     localStorage.setItem('meshek_dafna_cart', JSON.stringify(cart));
 }
 
-// פונקציית הרינדור לקולקציות
+async function fetchProducts() {
+    try {
+        const response = await fetch('https://backend-meshekdafna.onrender.com/api/products');
+        allProducts = await response.json();
+        renderProducts(); // מרנדר רק אחרי שהנתונים הגיעו
+    } catch (error) {
+        console.error("Failed to fetch products:", error);
+    }
+}
+
 function renderCollection(categoryId, targetElementId) {
     const target = document.getElementById(targetElementId);
     if (!target) return;
@@ -35,12 +29,18 @@ function renderCollection(categoryId, targetElementId) {
         <div class="product-card">
             <img src="${product.img}" alt="${product.name}">
             <h3>${product.name}</h3>
-            <p class="price">₪${product.price.toFixed(2)}</p>
-            <button class="add-btn" onclick="addToCart(${product.id})">הוסף לסל</button>
+            <div class="product-details">
+                <span class="price">₪${product.price.toFixed(2)}</span>
+                <span class="stock">מלאי: ${product.stock}</span>
+            </div>
+            <button class="add-btn" 
+                    ${product.stock <= 0 ? 'disabled' : ''} 
+                    onclick="addToCart(${product.id})">
+                ${product.stock > 0 ? 'הוסף לסל' : 'אזל מהמלאי'}
+            </button>
         </div>
     `).join('');
 }
-
 // הוספה לעגלה
 function addToCart(productId) {
     const product = allProducts.find(p => p.id === productId);
@@ -144,7 +144,8 @@ function renderProducts() {
 
 // הרצה בטעינת הדף
 window.onload = () => {
-    renderProducts(); // הצגת המוצרים בסליידרים
+    renderProducts();
+    fetchProducts(); // הצגת המוצרים בסליידרים
     updateUI();       // טעינת העגלה מה-LocalStorage
 };
 console.log(cart);
