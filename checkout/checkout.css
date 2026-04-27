@@ -95,6 +95,7 @@ h2, h3 { color: #1B5E20; margin-top: 0; }
 .summary-items {
     max-height: 400px;
     overflow-y: auto;
+    justify-self: center;
 }
 
 .summary-item {

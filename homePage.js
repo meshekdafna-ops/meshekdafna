@@ -23,7 +23,7 @@ async function fetchProducts() {
             if (currentPercent > 90) currentPercent = 90;
             updateLoader(currentPercent);
         }
-    }, 200);
+    }, 400);
 
     function updateLoader(percent) {
         progressFill.style.width = percent + '%';
