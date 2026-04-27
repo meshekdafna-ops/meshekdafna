@@ -16,37 +16,36 @@ async function fetchProducts() {
     
     let currentPercent = 0;
 
-    // פונקציית עזר להרצת האחוזים באופן ויזואלי
     const loadingInterval = setInterval(() => {
-        if (currentPercent < 90) { // רץ עד 90% ומחכה לתשובה מהשרת
-            currentPercent += Math.floor(Math.random() * 5) + 1; // קפיצות אקראיות למראה "אמיתי"
+        if (currentPercent < 90) {
+            currentPercent += Math.floor(Math.random() * 3) + 1;
             if (currentPercent > 90) currentPercent = 90;
             updateLoader(currentPercent);
         }
-    }, 400);
+    }, 400); // זריז יותר
 
     function updateLoader(percent) {
-        progressFill.style.width = percent + '%';
-        percentText.innerText = percent + '%';
+        if(progressFill) progressFill.style.width = percent + '%';
+        if(percentText) percentText.innerText = percent + '%';
     }
 
     try {
         const response = await fetch('https://backend-meshekdafna.onrender.com/api/products');
         allProducts = await response.json();
         
-        // כשהנתונים הגיעו - קופצים ל-100% ומעלימים
         clearInterval(loadingInterval);
         updateLoader(100);
         
         setTimeout(() => {
             renderProducts();
-            preloader.classList.add('loader-hidden');
-        }, 500); // השהייה קטנה כדי שיראו את ה-100%
+            if(preloader) preloader.classList.add('loader-hidden');
+        }, 500);
 
     } catch (error) {
         clearInterval(loadingInterval);
         console.error("Failed to fetch:", error);
-        document.getElementById('status-text').innerText = "תקלה בחיבור לשרת...";
+        const statusText = document.getElementById('status-text');
+        if(statusText) statusText.innerText = "תקלה בחיבור לשרת...";
     }
 }
 
@@ -56,9 +55,11 @@ function renderCollection(categoryId, targetElementId) {
 
     const filtered = allProducts.filter(p => p.category === categoryId);
     
+    // שינוי חשוב: product._id במקום product.id
+    // שינוי חשוב: product.image (כמו ב-Model) במקום product.img
     target.innerHTML = filtered.map(product => `
         <div class="product-card">
-            <img src="${product.img}" alt="${product.name}">
+            <img src="${product.image || product.img}" alt="${product.name}">
             <h3>${product.name}</h3>
             <div class="product-details">
                 <span class="price">₪${product.price.toFixed(2)}</span>
@@ -66,16 +67,17 @@ function renderCollection(categoryId, targetElementId) {
             </div>
             <button class="add-btn" 
                     ${product.stock <= 0 ? 'disabled' : ''} 
-                    onclick="addToCart(${product.id})">
+                    onclick="addToCart('${product._id}')">
                 ${product.stock > 0 ? 'הוסף לסל' : 'אזל מהמלאי'}
             </button>
         </div>
     `).join('');
 }
-// הוספה לעגלה
+
+// הוספה לעגלה - שימוש ב-_id
 function addToCart(productId) {
-    const product = allProducts.find(p => p.id === productId);
-    const existingItem = cart.find(item => item.id === productId);
+    const product = allProducts.find(p => p._id === productId);
+    const existingItem = cart.find(item => item._id === productId);
 
     if (existingItem) {
         existingItem.quantity += 1;
@@ -83,30 +85,35 @@ function addToCart(productId) {
         cart.push({ ...product, quantity: 1 });
     }
     
-    saveCart();   // שמירה בזיכרון
-    updateUI();   // עדכון הממשק
+    saveCart();
+    updateUI();
+    
+    // בונוס: פתיחת העגלה אוטומטית בהוספה
+    const modal = document.getElementById('cart-modal');
+    if(!modal.classList.contains('open')) toggleCart();
 }
 
-// עדכון הממשק (מספר בעגלה, רשימה ומחיר)
+// עדכון הממשק
 function updateUI() {
-    // עדכון המספר על העיגול הצף
-    document.getElementById('cart-count').innerText = cart.length;
+    const cartCount = document.getElementById('cart-count');
+    if(cartCount) cartCount.innerText = cart.reduce((sum, item) => sum + item.quantity, 0);
 
     const cartItemsElement = document.getElementById('cart-items');
+    if (!cartItemsElement) return;
     
     if (cart.length === 0) {
         cartItemsElement.innerHTML = '<p style="text-align:center; padding:20px;">העגלה ריקה</p>';
     } else {
         cartItemsElement.innerHTML = cart.map(item => `
             <div class="cart-item">
-                <img src="${item.img}">
+                <img src="${item.image || item.img}">
                 <div class="item-info">
                     <h4>${item.name}</h4>
                     <p>₪${item.price.toFixed(2)}</p>
                     <div class="qty-controls">
-                        <button class="qty-btn" onclick="changeQty(${item.id}, -1)">-</button>
+                        <button class="qty-btn" onclick="changeQty('${item._id}', -1)">-</button>
                         <span>${item.quantity}</span>
-                        <button class="qty-btn" onclick="changeQty(${item.id}, 1)">+</button>
+                        <button class="qty-btn" onclick="changeQty('${item._id}', 1)">+</button>
                     </div>
                 </div>
             </div>
@@ -114,26 +121,23 @@ function updateUI() {
     }
 
     const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-    document.getElementById('cart-total').innerText = `₪${total.toFixed(2)}`;
+    const totalElement = document.getElementById('cart-total');
+    if(totalElement) totalElement.innerText = `₪${total.toFixed(2)}`;
 }
 
-// שינוי כמות או הסרה
+// שינוי כמות - שימוש ב-_id
 function changeQty(id, delta) {
-    const item = cart.find(i => i.id === id);
+    const item = cart.find(i => i._id === id);
     if (item) {
         item.quantity += delta;
-        
         if (item.quantity <= 0) {
-            cart = cart.filter(i => i.id !== id);
+            cart = cart.filter(i => i._id !== id);
         }
     }
-    
-    saveCart();   // שמירה בזיכרון
-    updateUI();   // עדכון הממשק
+    saveCart();
+    updateUI();
 }
 
-// פתיחה/סגירה של העגלה
-// פתיחה/סגירה של העגלה עם חסימת גלילה הרמטית
 function toggleCart() {
     const modal = document.getElementById('cart-modal');
     const overlay = document.getElementById('cart-overlay');
@@ -143,40 +147,26 @@ function toggleCart() {
     
     if (modal.classList.contains('open')) {
         overlay.style.display = 'block';
-        // חסימת גלילה - פתרון משולב
         body.style.overflow = 'hidden'; 
-        body.style.height = '100vh';
-        body.classList.add('modal-open');
     } else {
         overlay.style.display = 'none';
-        // שחרור גלילה
         body.style.overflow = ''; 
-        body.style.height = '';
-        body.classList.remove('modal-open');
     }
 }
 
-// גלילה בחיצים
 function scrollSlider(id, direction) {
     const slider = document.getElementById(id);
     const scrollAmount = 300; 
-    slider.scrollBy({
-        left: direction * scrollAmount,
-        behavior: 'smooth'
-    });
+    slider.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
 }
 
-// רינדור כל המוצרים בדף
 function renderProducts() {
     renderCollection('fruits', 'fruits-grid');
     renderCollection('veggies', 'veggies-grid');
     renderCollection('packs', 'packs-grid');
 }
 
-// הרצה בטעינת הדף
 window.onload = () => {
-    renderProducts();
-    fetchProducts(); // הצגת המוצרים בסליידרים
-    updateUI();       // טעינת העגלה מה-LocalStorage
+    fetchProducts(); // קודם טוענים נתונים, ה-render קורה בתוך ה-fetch
+    updateUI();
 };
-console.log(cart);
