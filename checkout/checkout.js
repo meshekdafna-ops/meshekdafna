@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
         summaryContainer.innerHTML = cart.map(item => `
             <div class="summary-item">
                 <div class="summary-item-info">
-                    <img src="${item.img}" alt="${item.name}">
+                    <img src="${item.image || item.img}" alt="${item.name}">
                     <div>
                         <strong>${item.name}</strong><br>
                         <small>כמות: ${item.quantity}</small>
