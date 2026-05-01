@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>משק דפנה — מדיניות ותקנון</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Hebrew:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --green-dark:  #2E7D32;
+            --green-mid:   #43A047;
+            --green-light: #E8F5E9;
+            --green-accent:#1B5E20;
+            --text-main:   #2c2c2c;
+            --text-muted:  #666;
+            --bg:          #f6f8f3;
+            --white:       #ffffff;
+            --radius:      16px;
+            --shadow:      0 8px 32px rgba(0,0,0,0.07);
+        }
+
+        body {
+            font-family: 'Noto Sans Hebrew', sans-serif;
+            background: var(--bg);
+            color: var(--text-main);
+            direction: rtl;
+            min-height: 100vh;
+        }
+
+        /* ── NAVBAR ── */
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 5%;
+            background: linear-gradient(90deg, #43A047, #2E7D32);
+            height: 70px;
+            color: white;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+        }
+
+        .logo-text { display: flex; flex-direction: column; line-height: 1; cursor: pointer; }
+        .logo-small { font-size: 0.78rem; font-weight: 400; opacity: 0.85; }
+        .logo-main  { font-size: 1.5rem; font-weight: 900; letter-spacing: -0.5px; }
+
+        .back-link {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: background 0.2s;
+        }
+        .back-link:hover { background: rgba(255,255,255,0.15); }
+
+        /* ── PAGE HEADER ── */
+        .page-header {
+            background: linear-gradient(135deg, var(--green-dark) 0%, var(--green-mid) 100%);
+            color: white;
+            text-align: center;
+            padding: 48px 20px 32px;
+        }
+        .page-header h1 {
+            font-size: 2rem;
+            font-weight: 900;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+        .page-header p {
+            font-size: 0.95rem;
+            opacity: 0.85;
+        }
+
+        /* ── TABS ── */
+        .tabs-wrapper {
+            background: var(--white);
+            border-bottom: 1px solid #e0e0e0;
+            position: sticky;
+            top: 70px;
+            z-index: 90;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .tabs {
+            display: flex;
+            max-width: 900px;
+            margin: 0 auto;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+        .tabs::-webkit-scrollbar { display: none; }
+
+        .tab-btn {
+            flex: 1;
+            min-width: 130px;
+            padding: 16px 10px;
+            border: none;
+            background: none;
+            font-family: 'Noto Sans Hebrew', sans-serif;
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.22s ease;
+            white-space: nowrap;
+        }
+        .tab-btn i { display: block; font-size: 1.2rem; margin-bottom: 5px; }
+        .tab-btn:hover { color: var(--green-mid); background: var(--green-light); }
+        .tab-btn.active {
+            color: var(--green-dark);
+            border-bottom-color: var(--green-dark);
+            background: var(--green-light);
+        }
+
+        /* ── CONTENT ── */
+        .content-wrapper {
+            max-width: 860px;
+            margin: 40px auto 60px;
+            padding: 0 20px;
+        }
+
+        .tab-content { display: none; animation: fadeIn 0.3s ease; }
+        .tab-content.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ── POLICY CARD ── */
+        .policy-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 40px 44px;
+        }
+
+        .policy-card h2 {
+            color: var(--green-accent);
+            font-size: 1.6rem;
+            font-weight: 900;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .policy-card h2 i { font-size: 1.4rem; color: var(--green-mid); }
+
+        .policy-date {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 28px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--green-light);
+        }
+
+        .policy-section { margin-bottom: 28px; }
+
+        .policy-section h3 {
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: var(--green-dark);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .policy-section h3::before {
+            content: '';
+            display: inline-block;
+            width: 4px;
+            height: 18px;
+            background: var(--green-mid);
+            border-radius: 2px;
+        }
+
+        .policy-section p, .policy-section li {
+            font-size: 0.95rem;
+            line-height: 1.85;
+            color: #444;
+        }
+
+        .policy-section ul {
+            padding-right: 20px;
+            margin-top: 8px;
+        }
+        .policy-section ul li {
+            margin-bottom: 6px;
+            position: relative;
+        }
+        .policy-section ul li::marker { color: var(--green-mid); }
+
+        .highlight-box {
+            background: var(--green-light);
+            border-right: 4px solid var(--green-mid);
+            border-radius: 8px;
+            padding: 14px 18px;
+            margin: 16px 0;
+            font-size: 0.92rem;
+            color: var(--green-accent);
+            font-weight: 600;
+        }
+
+        .contact-footer {
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 2px solid var(--green-light);
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            text-align: center;
+        }
+        .contact-footer a { color: var(--green-dark); font-weight: 600; text-decoration: none; }
+        .contact-footer a:hover { text-decoration: underline; }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 600px) {
+            .policy-card { padding: 24px 20px; }
+            .policy-card h2 { font-size: 1.3rem; }
+            .tab-btn { font-size: 0.78rem; min-width: 100px; padding: 12px 6px; }
+            .page-header h1 { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="logo-text" onclick="window.location.href='../index.html'">
+            <span class="logo-small">משק</span>
+            <span class="logo-main">דפנה</span>
+        </div>
+        <a href="../index.html" class="back-link">
+            <i class="fas fa-arrow-right"></i> חזרה לחנות
+        </a>
+    </nav>
+
+    <!-- HEADER -->
+    <div class="page-header">
+        <h1>מדיניות ותקנון</h1>
+        <p>כל המידע החשוב על הרכישה שלך במשק דפנה</p>
+    </div>
+
+    <!-- TABS -->
+    <div class="tabs-wrapper">
+        <div class="tabs">
+            <button class="tab-btn active" onclick="showTab('privacy', this)">
+                <i class="fas fa-shield-halved"></i>
+                מדיניות פרטיות
+            </button>
+            <button class="tab-btn" onclick="showTab('returns', this)">
+                <i class="fas fa-rotate-left"></i>
+                מדיניות החזרות
+            </button>
+            <button class="tab-btn" onclick="showTab('shipping', this)">
+                <i class="fas fa-truck"></i>
+                משלוחים ואיסוף
+            </button>
+            <button class="tab-btn" onclick="showTab('terms', this)">
+                <i class="fas fa-file-lines"></i>
+                תקנון ותנאי שימוש
+            </button>
+        </div>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="content-wrapper">
+
+        <!-- 1. מדיניות פרטיות -->
+        <div class="tab-content active" id="tab-privacy">
+            <div class="policy-card">
+                <h2><i class="fas fa-shield-halved"></i> מדיניות פרטיות</h2>
+                <p class="policy-date">עדכון אחרון: ינואר 2025</p>
+
+                <div class="policy-section">
+                    <h3>מה אנחנו אוספים?</h3>
+                    <p>במהלך ביצוע הזמנה אנו אוספים את הפרטים הבאים:</p>
+                    <ul>
+                        <li>שם מלא</li>
+                        <li>מספר טלפון</li>
+                        <li>כתובת למשלוח (עיר, רחוב ומספר בית)</li>
+                    </ul>
+                </div>
+
+                <div class="policy-section">
+                    <h3>למה אנחנו משתמשים בפרטים?</h3>
+                    <p>הפרטים שאתם מוסרים משמשים אך ורק לצורך עיבוד ומשלוח ההזמנה שלכם. אנו לא משתמשים בהם לשיווק, ולא מעבירים אותם לצד שלישי כלשהו.</p>
+                </div>
+
+                <div class="policy-section">
+                    <h3>אחסון ואבטחת מידע</h3>
+                    <p>המידע נשמר במסד נתונים מאובטח. אנו נוקטים באמצעי אבטחה סבירים להגנה על המידע האישי שלכם.</p>
+                </div>
+
+                <div class="policy-section">
+                    <h3>עוגיות (Cookies)</h3>
+                    <p>האתר עשוי לשמור מידע זמני (כגון תוכן העגלה) ב-Local Storage של הדפדפן שלכם. מידע זה נשמר אצלכם בלבד ואינו נשלח לשרתינו ללא הסכמתכם.</p>
+                </div>
+
+                <div class="highlight-box">
+                    📞 לכל שאלה בנוגע לפרטיות, ניתן לפנות אלינו ישירות.
+                </div>
+
+                <div class="contact-footer">
+                    שאלות? <a href="tel:+972500000000">צרו קשר</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. מדיניות החזרות -->
+        <div class="tab-content" id="tab-returns">
+            <div class="policy-card">
+                <h2><i class="fas fa-rotate-left"></i> מדיניות החזרות</h2>
+                <p class="policy-date">עדכון אחרון: ינואר 2025</p>
+
+                <div class="policy-section">
+                    <h3>החזרת מוצרים</h3>
+                    <p>אנו שואפים לספק מוצרים טריים ואיכותיים בכל הזמנה. במקרה שמוצר הגיע פגום, קלוקל, או שונה מהמוזמן — נשמח לטפל בכך במהירות.</p>
+                </div>
+
+                <div class="policy-section">
+                    <h3>מתי ניתן לבקש החזרה?</h3>
+                    <ul>
+                        <li>מוצר שהתקבל פגום או קלוקל</li>
+                        <li>מוצר שגוי שנשלח בטעות</li>
+                        <li>כמות שגויה שהתקבלה</li>
+                    </ul>
+                </div>
+
+                <div class="policy-section">
+                    <h3>מוצרים שאינם ניתנים להחזרה</h3>
+                    <p>מוצרים טריים (פירות, ירקות) שנפתחו או נעשה בהם שימוש אינם ניתנים להחזרה, אלא אם הגיעו פגומים.</p>
+                </div>
+
+                <div class="policy-section">
+                    <h3>איך מבקשים החזרה?</h3>
+                    <p>יש לפנות אלינו בטלפון תוך <strong>24 שעות</strong> מרגע קבלת ההזמנה, עם תיאור הבעיה. נשתדל לפתור כל פנייה בצורה הטובה ביותר.</p>
+                </div>
+
+                <div class="highlight-box">
+                    ⏱️ פנייה תוך 24 שעות מרגע קבלת ההזמנה — זהו תנאי לטיפול בבקשה.
+                </div>
+
+                <div class="contact-footer">
+                    לבקשת החזרה: <a href="tel:+972500000000">התקשרו אלינו</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. משלוחים ואיסוף -->
+        <div class="tab-content" id="tab-shipping">
+            <div class="policy-card">
+                <h2><i class="fas fa-truck"></i> מדיניות משלוחים ואיסוף</h2>
+                <p class="policy-date">עדכון אחרון: ינואר 2025</p>
+
+                <div class="policy-section">
+                    <h3>אזורי משלוח</h3>
+                    <p>אנו מספקים משלוחים לאזורים נבחרים. לבירור האם הכתובת שלכם נמצאת באזור המשלוח שלנו, אנא צרו קשר לפני ביצוע ההזמנה.</p>
+                </div>
+
+                <div class="policy-section">
+                    <h3>ימי וזמני משלוח</h3>
+                    <ul>
+                        <li>הזמנות מתבצעות בימים א׳–ה׳</li>
+                        <li>זמן אספקה: עד 3 ימי עסקים ממועד אישור ההזמנה</li>
+                        <li>לא מבצעים משלוחים בשבת ובחגים</li>
+                    </ul>
+                </div>
+
+                <div class="policy-section">
+                    <h3>עלות משלוח</h3>
+                    <p>עלות המשלוח מחושבת לפי מיקום ומשקל ההזמנה ותוצג בעת ביצוע ההזמנה. הזמנות מעל סכום מינימלי עשויות להיות זכאיות למשלוח חינם.</p>
+                </div>
+
+                <div class="policy-section">
+                    <h3>איסוף עצמי</h3>
+                    <p>ניתן לאסוף הזמנות ישירות מהמשק בתיאום מראש. יש לציין בהזמנה כי מדובר באיסוף עצמי וליצור קשר לתיאום זמן הגעה.</p>
+                </div>
+
+                <div class="highlight-box">
+                    🌿 המוצרים נקטפים טריים ונשלחים בהקדם האפשרי לשמירה על איכות מרבית.
+                </div>
+
+                <div class="contact-footer">
+                    לתיאום משלוח או איסוף: <a href="tel:+972500000000">צרו קשר</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. תקנון ותנאי שימוש -->
+        <div class="tab-content" id="tab-terms">
+            <div class="policy-card">
+                <h2><i class="fas fa-file-lines"></i> תקנון ותנאי שימוש</h2>
+                <p class="policy-date">עדכון אחרון: ינואר 2025</p>
+
+                <div class="policy-section">
+                    <h3>כללי</h3>
+                    <p>השימוש באתר ובשירותים של משק דפנה כפוף לתנאים המפורטים להלן. ביצוע הזמנה מהווה הסכמה לתנאים אלו.</p>
+                </div>
+
+                <div class="policy-section">
+                    <h3>ביצוע הזמנה</h3>
+                    <ul>
+                        <li>ניתן להזמין רק מוצרים שיש בהם מלאי זמין</li>
+                        <li>מחירי המוצרים עשויים להשתנות מעת לעת</li>
+                        <li>הזמנה תאושר בהודעה לאחר קבלתה</li>
+                        <li>המשק שומר לעצמו את הזכות לבטל הזמנה במקרה של טעות טכנית במחיר או במלאי</li>
+                    </ul>
+                </div>
+
+                <div class="policy-section">
+                    <h3>תשלום</h3>
+                    <p>התשלום מתבצע בעת קבלת ההזמנה (משלוח) או בעת האיסוף, אלא אם סוכם אחרת מראש. אנו מקבלים מזומן ואמצעי תשלום נוספים בהסכמה.</p>
+                </div>
+
+                <div class="policy-section">
+                    <h3>אחריות</h3>
+                    <p>משק דפנה אחראי לאיכות המוצרים בעת מסירתם. לאחר קבלת ההזמנה ואישורה על ידי הלקוח, האחריות עוברת לרוכש.</p>
+                </div>
+
+                <div class="policy-section">
+                    <h3>קניין רוחני</h3>
+                    <p>כל התכנים, התמונות והמידע המופיעים באתר הם רכושו של משק דפנה ואין לעשות בהם שימוש ללא אישור מפורש בכתב.</p>
+                </div>
+
+                <div class="policy-section">
+                    <h3>שינויים בתקנון</h3>
+                    <p>המשק רשאי לעדכן תקנון זה בכל עת. השימוש המתמשך באתר לאחר שינויים מהווה הסכמה לתנאים המעודכנים.</p>
+                </div>
+
+                <div class="highlight-box">
+                    ⚖️ תקנון זה כפוף לדיני מדינת ישראל. לכל סכסוך — סמכות השיפוט לבתי המשפט המוסמכים.
+                </div>
+
+                <div class="contact-footer">
+                    שאלות על התקנון? <a href="tel:+972500000000">דברו איתנו</a>
+                </div>
+            </div>
+        </div>
+
+    </div><!-- end content-wrapper -->
+
+    <script>
+        function showTab(name, btn) {
+    document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+    document.getElementById('tab-' + name).classList.add('active');
+    btn.classList.add('active');
+    window.location.hash = name; // ← מעדכן את ה-URL
+}
+
+// ← פותח את הטאב הנכון לפי ה-URL
+window.addEventListener('DOMContentLoaded', () => {
+    const hash = window.location.hash.replace('#', '');
+    const validTabs = ['privacy', 'returns', 'shipping', 'terms'];
+    if (hash && validTabs.includes(hash)) {
+        const btn = document.querySelector(`[onclick="showTab('${hash}', this)"]`);
+        if (btn) showTab(hash, btn);
+    }
+});
+    </script>
+
+</body>
+</html>
