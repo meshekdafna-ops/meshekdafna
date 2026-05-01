@@ -264,19 +264,41 @@ body.modal-open {
 .total-price { font-size: 1.4rem; font-weight: 800; margin-bottom: 15px; }
 .checkout-btn { width: 100%; background: #2E7D32; color: white; border: none; padding: 15px; border-radius: 12px; font-weight: 700; cursor: pointer; }
 
-/* פוטר ואודות */
-.aboutUs-section{
-    margin-top: 5vh;
+.aboutUs-section {
+    margin: 6vh 5%;
     display: flex;
+    flex-direction: row-reverse; /* טקסט ימין, תמונה שמאל */
     justify-content: center;
     align-items: center;
-    gap:1em;
-    flex-direction: column;
-    text-align: center;
+    gap: 48px;
 }
+
 .aboutUs-section img {
-    border-radius: 16px;
-    box-shadow: -5px 0 25px rgba(0, 0, 0, 0.18);
+    width: 400px;
+    height: 400px;
+    object-fit: cover;
+    border-radius: 20px;
+    box-shadow: -8px 8px 32px rgba(0, 0, 0, 0.15);
+    flex-shrink: 0;
+}
+
+.about-us-content {
+    max-width: 480px;
+    text-align: right;
+}
+
+.about-us-content h1 {
+    font-size: 2rem;
+    font-weight: 900;
+    color: #1B5E20;
+    margin-bottom: 16px;
+    line-height: 1.3;
+}
+
+.about-us-content p {
+    font-size: 1rem;
+    line-height: 1.85;
+    color: #555;
 }
 
 .footer {
@@ -339,5 +361,49 @@ body.modal-open {
     
     .cart-footer {
         padding-bottom: env(safe-area-inset-bottom);
+    }
+    .aboutUs-section {
+        flex-direction: column;
+        gap: 24px;
+        margin: 4vh 5%;
+        text-align: center;
+    }
+
+    .aboutUs-section img {
+        width: 85vw;   /* ריבוע יפה לפי רוחב המסך */
+        height: 85vw;
+        border-radius: 20px;
+    }
+
+    .about-us-content {
+        text-align: center;
+    }
+
+    .about-us-content h1 {
+        font-size: 1.5rem;
+    }
+}
+@media (min-width: 1400px) {
+    .aboutUs-section {
+        gap: 72px;
+        margin: 8vh 8%;
+    }
+
+    .aboutUs-section img {
+        width: 520px;
+        height: 520px;
+    }
+
+    .about-us-content {
+        max-width: 600px;
+    }
+
+    .about-us-content h1 {
+        font-size: 2.6rem;
+    }
+
+    .about-us-content p {
+        font-size: 1.1rem;
+        line-height: 2;
     }
 }
